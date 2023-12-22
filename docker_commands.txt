@@ -1,0 +1,10 @@
+docker build -t backend-image -f backend.dockerfile .
+
+docker build -t frontend-image -f frontend.dockerfile .
+
+docker build -t database-image -f database.dockerfile .
+
+docker run -d -e DB_BASE_URL=mongodb://localhost:27017/ -e PORT=3000 -p 3000:3000 --name backend-container backend-image
+docker run -d -e PORT=8080 -p 8080:8080 --name frontend-container frontend-image
+docker run -d -p 27017:27017 --name database-container database-image
+

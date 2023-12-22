@@ -1,0 +1,11 @@
+kubectl get pods
+kubectl apply -f pod.yaml
+kubectl apply -f rs.yaml
+kubectl apply -f svc.yaml
+kubectl get svc
+
+
+docker context use default
+docker context ls
+minikube service backend-service
+minikube ip

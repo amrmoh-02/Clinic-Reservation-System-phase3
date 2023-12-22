@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend-container
+        image: backend-image
+        env:
+        - name: DB_BASE_URL
+          value: mongodb://mongodb-service:27017/
+        - name: PORT
+          value: "3000"
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 3000
+
+# apiVersion: v1 specifies the Kubernetes API version being used.
+# kind: Service declares that this YAML defines a Kubernetes Service.
+# metadata provides information about the service, such as its name (backend-service).
+# spec is where you define the desired state of the service.
+# selector is used to select the pods that the service will route traffic to, it selects pods with the label app: backend.
+# ports is an array specifying the ports on which the service will listen.
+# protocol: TCP indicates that the service is using the TCP protocol.
+# port: 3000 specifies the port number on which the service will be exposed.
